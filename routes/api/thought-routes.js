@@ -23,12 +23,9 @@ router.post("/", async (req, res) => {
             }
         }, {new: true});
         if (! dbUserData) {
-            return res.status(404).json({message: "Thought created but no user with this ID!"})
+            return res.status(404).json({message: "Thought created but no user with this ID!"});
         }
-        res.status(200).json({
-            ... dbThoughtData,
-            message: `Thought successfully created!`
-        });
+        res.status(200).json({message: `Thought successfully created!`});
     } catch (err) {
         res.status(500).json(err)
     }
@@ -77,7 +74,7 @@ router.delete("/:thoughtId", async (req, res) => {
             }
         }, {new: true});
         if (! dbUserData) {
-            return res.status(404).json({message: "Thought created but no user with this ID!"})
+            return res.status(404).json({message: "No thought with this ID!"})
         }
         res.json({message: "Thought successfully deleted!"})
     } catch (err) {
@@ -87,13 +84,16 @@ router.delete("/:thoughtId", async (req, res) => {
 
 router.post("/:thoughtId/reactions", async (req, res) => {
     try {
-        const dbThoughtData = await Thought.findOneAndUpdate(
-            {
-                _id: req.params.thoughtId
-            },
-            { $addToSet: { reactions: req.body}},
-            { runValidators: true, new: true}
-        );
+        const dbThoughtData = await Thought.findOneAndUpdate({
+            _id: req.params.thoughtId
+        }, {
+            $addToSet: {
+                reactions: req.body
+            }
+        }, {
+            runValidators: true,
+            new: true
+        });
         if (! dbThoughtData) {
             return res.status(404).json({message: "No thought with this ID!"});
         }
@@ -104,13 +104,18 @@ router.post("/:thoughtId/reactions", async (req, res) => {
 });
 router.delete("/:thoughtId/reactions/:reactionId", async (req, res) => {
     try {
-        const dbThoughtData = await Thought.findOneAndUpdate(
-            {
-                _id: req.params.thoughtId
-            },
-            { $pull: { reactions: { reactionId: req.params.reactionId}}},
-            { runValidators: true, new: true}
-        );
+        const dbThoughtData = await Thought.findOneAndUpdate({
+            _id: req.params.thoughtId
+        }, {
+            $pull: {
+                reactions: {
+                    reactionId: req.params.reactionId
+                }
+            }
+        }, {
+            runValidators: true,
+            new: true
+        });
         if (! dbThoughtData) {
             return res.status(404).json({message: "No thought with this ID!"});
         }
