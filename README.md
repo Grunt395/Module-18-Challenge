@@ -9,6 +9,10 @@ When I open API GET routes in Insomnia for users and thoughts, Then the data for
 When I test API POST, PUT, and DELETE routes in Insomnia, Then I am able to successfully create, update, and delete users and thoughts in my database.
 When I test API POST and DELETE routes in Insomnia, Then I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list.
 
+Video Demo:
+
+https://drive.google.com/file/d/1sG3XdEHRiRVSJJ8py7uDVIPj5En4R27m/view
+
 Instructions used in the terminal to run:
 
 npm install
